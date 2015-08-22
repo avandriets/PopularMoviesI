@@ -1,8 +1,9 @@
 package com.avandriets.myappportfolio.popularmoviesi;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,10 +13,18 @@ public class MainActivity extends AppCompatActivity {
 
     private final String FILM_LIST_FRAGMENT_TAG = "FLTAG";
 
+    private String mSortOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Save current sort order
+        SharedPreferences mPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        String defaultValue = this.getResources().getString(R.string.pref_sort_default);
+        String keyOfPreference = this.getString(R.string.sort_key);
+
+        mSortOrder = mPreference.getString(keyOfPreference, defaultValue);
 
         if (savedInstanceState == null){
 
@@ -27,9 +36,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        MainActivityFragment ff = (MainActivityFragment)getSupportFragmentManager().findFragmentByTag(FILM_LIST_FRAGMENT_TAG);
-        ff.loadFilms();
+        SharedPreferences mPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        String defaultValue = this.getResources().getString(R.string.pref_sort_default);
+        String keyOfPreference = this.getString(R.string.sort_key);
+        String sortOrder = mPreference.getString(keyOfPreference, defaultValue);
 
+        if (!sortOrder.equals(mSortOrder))
+        {
+            MainActivityFragment ff = (MainActivityFragment)getSupportFragmentManager().findFragmentByTag(FILM_LIST_FRAGMENT_TAG);
+            ff.loadFilms();
+        }
+
+        mSortOrder = sortOrder;
     }
 
     @Override
@@ -48,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

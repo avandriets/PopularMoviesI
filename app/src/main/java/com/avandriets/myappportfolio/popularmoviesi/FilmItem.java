@@ -40,6 +40,29 @@ public class FilmItem implements Parcelable {
         this.FilmId = FilmId;
     }
 
+    protected FilmItem(Parcel in) {
+        FilmId = in.readString();
+        Title = in.readString();
+        PosterURL = in.readString();
+        popularity = in.readDouble();
+        vote_average = in.readDouble();
+        overview = in.readString();
+        original_title = in.readString();
+        release_date = in.readString();
+    }
+
+    public static final Creator<FilmItem> CREATOR = new Creator<FilmItem>() {
+        @Override
+        public FilmItem createFromParcel(Parcel in) {
+            return new FilmItem(in);
+        }
+
+        @Override
+        public FilmItem[] newArray(int size) {
+            return new FilmItem[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;

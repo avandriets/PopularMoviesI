@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -33,30 +32,27 @@ public class MainActivityFragment extends Fragment {
 
     private ArrayList<FilmItem> arrayOfFilms;
     FilmAdapter mAdapter;
-    GridView grid;
+    GridView mGrid;
 
     public MainActivityFragment() {
         // Construct the data source
+        arrayOfFilms = new ArrayList<>();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putParcelableArrayList(FilmUtils.MOVIE_KEY, arrayOfFilms);
-
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        arrayOfFilms = new ArrayList<FilmItem>();
-
-        if (savedInstanceState != null)
-        {
-            arrayOfFilms = savedInstanceState.getParcelableArrayList(FilmUtils.MOVIE_KEY);
-        }
+    public void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -64,13 +60,22 @@ public class MainActivityFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        if(savedInstanceState == null)
+        {
+            loadFilms();
+        }else
+        {
+            arrayOfFilms = savedInstanceState.getParcelableArrayList(FilmUtils.MOVIE_KEY);
+        }
+
         mAdapter = new FilmAdapter(rootView.getContext(),arrayOfFilms);
 
-        grid=(GridView)rootView.findViewById(R.id.gridView);
-        grid.setAdapter(mAdapter);
+        mGrid =(GridView)rootView.findViewById(R.id.gridView);
+        mGrid.setAdapter(mAdapter);
 
-        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
                 Intent detailFragment = new Intent(getActivity(), FilmDetail.class);
 
                 detailFragment.putExtra(FilmItem.EXTRA_FILMID, arrayOfFilms.get(position).FilmId);
