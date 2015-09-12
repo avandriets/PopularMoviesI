@@ -1,38 +1,42 @@
 package com.avandriets.myappportfolio.popularmoviesi;
 
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import com.squareup.picasso.Picasso;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import java.util.ArrayList;
 
+public class VideoTrailersAdapter extends ArrayAdapter<VideoItem> {
 
-public class FilmAdapter extends BaseAdapter {
     private Context context;
-    private final ArrayList<FilmItem> mobileValues;
+    private final ArrayList<VideoItem> mobileValues;
+    private int layoutId;
 
-    public FilmAdapter(Context context, ArrayList<FilmItem> mobileValues) {
-        this.context = context;
-        this.mobileValues = mobileValues;
+    public VideoTrailersAdapter(Context context, int resourceLayoutId, ArrayList<VideoItem> objects) {
+        super(context, resourceLayoutId, objects);
 
+        this.layoutId   = resourceLayoutId;
+        this.context    = context;
+        this.mobileValues    = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
-        FilmItem filmItem = (FilmItem) getItem(position);
+        VideoItem videoItem = (VideoItem) getItem(position);
+
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.grid_row, parent, false);
+            convertView = LayoutInflater.from(context).inflate(layoutId, parent, false);
         }
 
         // Lookup view for data population
-        ImageView ivImage = (ImageView) convertView.findViewById(R.id.poster);
-        Picasso.with(context).load(mobileValues.get(position).PosterURL).placeholder(R.drawable.ic_photo_black_48dp).error(R.drawable.ic_error_black_48dp).into(ivImage);
+        TextView tvTrailerName = (TextView)convertView.findViewById(R.id.TrailerNameTextView);
+        tvTrailerName.setText(videoItem.name);
 
         return convertView;
     }
@@ -43,7 +47,7 @@ public class FilmAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public VideoItem getItem(int position) {
         return mobileValues.get(position);
     }
 
@@ -51,4 +55,5 @@ public class FilmAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
 }

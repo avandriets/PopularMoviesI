@@ -2,4 +2,5 @@
 <resources>
     <dimen name="image_width">160dp</dimen>
     <dimen name="image_hight">240dp</dimen>
+    <dimen name="frame_with">160dp</dimen>
 </resources>

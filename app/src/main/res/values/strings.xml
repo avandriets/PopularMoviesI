@@ -10,4 +10,7 @@
     <string name="pref_sort_highest_rated">vote_average.desc</string>
     <string name="sort_order">Sort order</string>
     <string name="sort_key">sort</string>
+    <string name="ReviewsLabel">Reviews</string>
+    <string name="TrailersLabel">Trailers</string>
+    <string name="FavoriteLabel">Favorite</string>
 </resources>
