@@ -83,12 +83,12 @@ public class FilmDetailFragment extends Fragment {
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            filmItem = arguments.getParcelable("FRAGMENT_DATA");
+            filmItem = arguments.getParcelable(FilmUtils.FRAGMENT_DATA);
         }
         else {
 
-            if (intent != null && intent.hasExtra("FRAGMENT_DATA")) {
-                filmItem = intent.getParcelableExtra("FRAGMENT_DATA");
+            if (intent != null && intent.hasExtra(FilmUtils.FRAGMENT_DATA)) {
+                filmItem = intent.getParcelableExtra(FilmUtils.FRAGMENT_DATA);
             }
         }
 
@@ -299,7 +299,7 @@ public class FilmDetailFragment extends Fragment {
 
                 Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                         .appendPath(id)
-                        .appendPath("reviews")
+                        .appendPath(FilmUtils.MOVIE_REVIEW_PATH)
                         .appendQueryParameter(APIKEY_PARAM, api_key)
                         .build();
 

@@ -55,7 +55,7 @@ public class MainActivityFragment extends Fragment {
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            arrayOfFilms = arguments.getParcelableArrayList("FRAGMENT_list_DATA");
+            arrayOfFilms = arguments.getParcelableArrayList(FilmUtils.FRAGMENT_LIST_DATA);
         }
 
         if(savedInstanceState != null)

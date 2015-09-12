@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
 
         if (mTwoPane) {
             Bundle args = new Bundle();
-            args.putParcelable("FRAGMENT_DATA", filmItem);
+            args.putParcelable(FilmUtils.FRAGMENT_DATA, filmItem);
 
             FilmDetailFragment fragment = new FilmDetailFragment();
             fragment.setArguments(args);
@@ -126,10 +126,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
 
         } else {
             Intent detailFragment = new Intent(this, FilmDetail.class);
-            detailFragment.putExtra("FRAGMENT_DATA", filmItem);
+            detailFragment.putExtra(FilmUtils.FRAGMENT_DATA, filmItem);
             startActivity(detailFragment);
         }
-
     }
 
     @Override
@@ -143,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
                 arrayList.add(loadFilmItem);
         }
 
-        args.putParcelableArrayList("FRAGMENT_list_DATA", arrayList);
+        args.putParcelableArrayList(FilmUtils.FRAGMENT_LIST_DATA, arrayList);
 
         MainActivityFragment fragment = new MainActivityFragment();
         fragment.setArguments(args);
